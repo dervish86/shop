@@ -1,0 +1,40 @@
+name: Update gem conservative
+
+on:
+  push:
+    branches:
+      - 'gem/update/**'
+    paths:
+      - Gemfile.lock
+
+permissions:
+  contents: write
+
+jobs:
+  bundle_update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          rubygems: latest
+      - name: Set GEMNAME
+        run: echo "GEMNAME=$(git show -s --format=%s | awk '{print $2}')" >> $GITHUB_ENV # Grabs second word (gemname) from the commit message formatted `Bump gemname from X to Y`
+      - name: Reset last commit
+        run: git reset --hard HEAD~1
+      - name: Update gem $GEMNAME
+        run: bundle update $GEMNAME --conservative
+      - name: Configure Git
+        run: |
+          git config --local user.email 'alexander.dervish@gmail.com'
+          git config --local user.name 'Olexandr Dervish'
+      - name: Commit
+        run: |
+          git add .
+          git commit -m 'Bump $GEMNAME conservative'
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
