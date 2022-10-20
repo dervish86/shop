@@ -203,7 +203,6 @@ GEM
 PLATFORMS
   ruby
 
-
 DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
