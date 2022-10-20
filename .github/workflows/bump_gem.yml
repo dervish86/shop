@@ -11,13 +11,10 @@ permissions:
 jobs:
   bundle_update:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pusher.name != 'bla' }}
+    if: ${{ github.event.pusher.name == 'dervish86' }}
     steps:
-      - name: debug
-        run: |
-          echo '${{ toJSON(github) }}'
-          echo '${{ toJSON(github.event.pusher.name) }}'
-
+      - name: Debug
+        run: echo '${{ toJSON(github.event.pusher.name) }}'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
