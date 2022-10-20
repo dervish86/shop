@@ -95,7 +95,7 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     pg (1.2.3)
-    pry (0.13.1)
+    pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
     puma (3.12.6)
@@ -221,4 +221,4 @@ DEPENDENCIES
   webpacker
 
 BUNDLED WITH
-   1.16.1
+   2.3.24
