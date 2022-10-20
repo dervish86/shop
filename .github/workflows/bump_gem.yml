@@ -11,7 +11,7 @@ permissions:
 jobs:
   bundle_update:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pusher.name == 'Olexandr Dervish' }}
+    if: ${{ github.event.pusher.name == 'Oleksandr Dervish' }}
     steps:
       - name: debug
         run: |
