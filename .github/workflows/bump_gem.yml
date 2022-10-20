@@ -14,10 +14,9 @@ jobs:
     steps:
       - name: debug
         run: |
-          echo $github.event.pusher.name
+          echo {{ $github.event.pusher.name == 'Olexandr Dervish' }}
           echo "$github.event.pusher.name"
           echo "$github.event.pusher"
-          $github.event.pusher.name
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
