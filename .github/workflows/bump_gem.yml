@@ -13,7 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: debug
-        run: echo $github.event.pusher.name
+        run: |
+          echo $github.event.pusher.name
+          echo "$github.event.pusher.name"
+          echo "$github.event.pusher"
+          $github.event.pusher.name
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
