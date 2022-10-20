@@ -11,13 +11,16 @@ permissions:
 jobs:
   bundle_update:
     runs-on: ubuntu-latest
+    if: ${{ $github.event.pusher.name == 'Olexandr Dervish' }}
     steps:
       - name: debug
         run: |
           echo {{ $github.event.pusher.name == 'Olexandr Dervish' }}
           echo "$github.event.pusher.name"
           echo "$github.event.pusher"
+
       - uses: actions/checkout@v3
+        if: ${{ $github.event.pusher.name == 'Olexandr Dervish' }}
         with:
           fetch-depth: 2
       - name: Set GEMNAME
