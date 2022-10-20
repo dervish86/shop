@@ -13,10 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true
-          rubygems: latest
           fetch-depth: 2
       - name: Set GEMNAME
         run: echo "GEMNAME=$(git show -s --format=%s | awk '{print $2}')" >> $GITHUB_ENV # Grabs second word (gemname) from the commit message formatted `Bump gemname from X to Y`
@@ -24,13 +21,18 @@ jobs:
         run: |
           git config --local user.email 'alexander.dervish@gmail.com'
           git config --local user.name 'Olexandr Dervish'
-      # - name: Reset last commit
-      #   run: git reset --hard $(git log -2 --format=format:"%H" | tail -1)
-      - name: Reset changes
-        run: |
-          git fetch origin
-          git checkout origin/master Gemfile.lock
-      - name: Update gem $GEMNAME
+      - name: Reset last commit
+        run: git reset --hard HEAD~1
+      - name: Reset remote branch
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          rubygems: latest
+      - name: Update gem
         run: bundle update $GEMNAME --conservative
       - name: Commit
         run: |
